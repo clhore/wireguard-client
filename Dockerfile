@@ -7,12 +7,12 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o wireguard-client 
 
 #####################################################################################
 
-FROM alpine:3.21.3
+FROM debian:unstable-slim
 
-RUN apk add --no-cache wireguard-tools \
+RUN apt update && \
+    apt install -y wireguard-tools \
     iputils-ping && \
-    rm -rf /var/cache/apk/* && \
-    rm -rf /var/lib/apk/lists/*
+    rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/wireguard
 
